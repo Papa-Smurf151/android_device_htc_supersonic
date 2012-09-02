@@ -1,0 +1,26 @@
+#!/system/bin/sh
+
+#   Smurfed Out Tweaks
+#     Created By Papa Smurf151 from XDA
+
+# description of variables
+# FILE is the file
+# VALUES will hold the values of the file
+
+FILE=/system/etc/LOTK_Settings.db
+
+# sets VALUES to all values inside FILE
+VALUES=$(<$FILE) 
+
+# each entry in the file gets assigned a number (array)
+# 0 is VAR1, 1 is VAR2, 2 is VAR3, etc
+Cron1=${VALUES[1]} | sed 's/[^=]*=//'
+
+. /system/etc/cron/cron.conf
+
+if [ "$Cron1" -eq 1 ]; then
+	if test $DAILY_DROP_CACHES -eq 1; then
+		sync
+		echo 3 > /proc/sys/vm/drop_caches
+	fi
+fi	

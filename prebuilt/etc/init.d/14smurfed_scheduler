@@ -1,0 +1,15 @@
+#! /system/bin/bash
+
+#   Smurfed Out Tweaks
+#     Created By Papa Smurf151 from XDA
+# Set Scheduler
+
+. /system/etc/SmurfMod_settings.sh
+
+busybox mount -o remount,rw /system
+
+chmod -R 777 /sys/block/mmcblk0/queue/scheduler
+echo $scheduler > /sys/block/mmcblk0/queue/scheduler
+chmod -R 444 /sys/block/mmcblk0/queue/scheduler
+
+busybox mount -o remount,ro /system

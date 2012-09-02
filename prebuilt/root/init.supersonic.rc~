@@ -13,6 +13,17 @@ on init
     mkdir /data/app-cache 0771 system system
     mount rootfs rootfs / ro remount
 
+# Define the memory thresholds at which the above process classes will
+# be killed.  These numbers are in pages (4k).
+    setprop ro.FOREGROUND_APP_MEM 3584
+    setprop ro.VISIBLE_APP_MEM 4096
+    setprop ro.SECONDARY_SERVER_MEM 6144
+    setprop ro.BACKUP_APP_MEM 6144
+    setprop ro.HOME_APP_MEM 6144
+    setprop ro.HIDDEN_APP_MEM 7168
+    setprop ro.CONTENT_PROVIDER_MEM 7680
+    setprop ro.EMPTY_APP_MEM 8192
+
 on boot
     mount debugfs /sys/kernel/debug /sys/kernel/debug
 
@@ -78,75 +89,13 @@ on boot
     write /sys/module/lowmemorykiller/parameters/check_filepages 1
 
     # performance tweaks for flash
-    write /sys/block/mtdblock4/bdi/read_ahead_kb 8
-    write /sys/block/mtdblock5/bdi/read_ahead_kb 8
-    write /sys/block/mtdblock6/bdi/read_ahead_kb 8
-    write /sys/block/mtdblock0/bdi/read_ahead_kb 8
-    write /sys/block/mtdblock1/bdi/read_ahead_kb 8
-    write /sys/block/mtdblock2/bdi/read_ahead_kb 8
-    write /sys/block/mtdblock3/bdi/read_ahead_kb 8
-    write /sys/devices/virtual/bdi/7:0/read_ahead_kb 128
-    write /sys/devices/virtual/bdi/7:1/read_ahead_kb 128
-    write /sys/devices/virtual/bdi/7:2/read_ahead_kb 128
-    write /sys/devices/virtual/bdi/7:3/read_ahead_kb 128
-    write /sys/devices/virtual/bdi/7:4/read_ahead_kb 128
-    write /sys/devices/virtual/bdi/7:5/read_ahead_kb 128
-    write /sys/devices/virtual/bdi/7:6/read_ahead_kb 128
-    write /sys/devices/virtual/bdi/7:7/read_ahead_kb 128
-    write /sys/devices/virtual/bdi/default/read_ahead_kb 4096
-    write /sys/devices/virtual/bdi/179:0/max_ratio 97
-    write /sys/devices/virtual/bdi/default/max_ratio 97
-    write /sys/devices/virtual/bdi/179:0/read_ahead_kb 4096
-
-    # Smooth Settings
-    write /sys/devices/system/cpu/cpu0/cpufreq/smooth_target 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/smooth_offset 2
-    write /sys/devices/system/cpu/cpu0/cpufreq/smooth_step 2
+    write /sys/block/mtdblock4/bdi/read_ahead_kb 4
+    write /sys/block/mtdblock5/bdi/read_ahead_kb 4
+    write /sys/block/mtdblock6/bdi/read_ahead_kb 4
 
     # TCP buffer size tweaks to improve throughput
-    write /proc/sys/net/core/wmem_max=1048576
-    write /proc/sys/net/core/rmem_default=262144
-    write /proc/sys/net/core/wmem_default=262144
-    write /proc/sys/net/core/optmem_max=20480
-    write /proc/sys/net/unix/max_dgram_qlen=50
-    write /proc/sys/net/ipv4/tcp_moderate_rcvbuf=1
-    write /proc/sys/net/ipv4/udp_rmem_min=6144
-    write /proc/sys/net/ipv4/udp_wmem_min=6144
-    write /proc/sys/net/ipv4/tcp_rfc1337=1
-    write /proc/sys/net/ipv4/ip_no_pmtu_disc=0
-    write /proc/sys/net/ipv4/tcp_ecn=0
-    write /proc/sys/net/ipv4/route/flush=1
-    write /proc/sys/net/ipv4/tcp_rmem=6144 87380 524288
-    write /proc/sys/net/ipv4/tcp_wmem=6144 87380 524288
-    write /proc/sys/net/ipv4/tcp_mem=187000 187000 187000
-    write /proc/sys/net/ipv4/tcp_timestamps=1
-    write /proc/sys/net/ipv4/tcp_sack=1
-    write /proc/sys/net/ipv4/tcp_fack=1
-    write /proc/sys/net/ipv4/tcp_window_scaling=1
-    write /proc/sys/net/ipv4/tcp_tw_recycle=1
-    write /proc/sys/net/ipv4/tcp_tw_reuse=1
-    write /proc/sys/net/ipv4/tcp_congestion_control=cubic
-    write /proc/sys/net/ipv4/tcp_syncookies=1
-    write /proc/sys/net/ipv4/conf/all/rp_filter=1
-    write /proc/sys/net/ipv4/conf/default/rp_filter=1
-    write /proc/sys/net/ipv4/tcp_synack_retries=2
-    write /proc/sys/net/ipv4/tcp_syn_retries=2
-    write /proc/sys/net/ipv4/tcp_max_syn_backlog=1024
-    write /proc/sys/net/ipv4/tcp_max_tw_buckets=16384
-    write /proc/sys/net/ipv4/icmp_echo_ignore_all=1
-    write /proc/sys/net/ipv4/icmp_ignore_bogus_error_responses=1
-    write /proc/sys/net/ipv4/tcp_no_metrics_save=1
-    write /proc/sys/net/ipv4/tcp_fin_timeout=15
-    write /proc/sys/net/ipv4/tcp_keepalive_intvl=30
-    write /proc/sys/net/ipv4/tcp_keepalive_probes=5
-    write /proc/sys/net/ipv4/tcp_keepalive_time=1800
-    write /proc/sys/net/ipv4/ip_forward=0
-    write /proc/sys/net/ipv4/conf/default/accept_source_route=0
-    write /proc/sys/net/ipv4/conf/all/accept_source_route=0
-    write /proc/sys/net/ipv4/conf/all/accept_redirects=0
-    write /proc/sys/net/ipv4/conf/default/accept_redirects=0
-    write /proc/sys/net/ipv4/conf/all/secure_redirects=0
-    write /proc/sys/net/ipv4/conf/default/secure_redirects=0
+    write /proc/sys/net/core/wmem_max 524288
+    write /proc/sys/net/core/rmem_max 524288
 
     # Force loading of modem and Q6 images
     service load-modem /system/bin/load-modem.sh

@@ -1,0 +1,29 @@
+#! /system/bin/bash
+
+#   Smurfed Out Tweaks
+#     Created By Papa Smurf151 from XDA
+# Remove Cache, Tmp, and Unused Files
+
+. /system/etc/SmurfMod_settings.sh
+
+if [ $dump_cache -eq 1 ]; then
+	busybox mount -o remount,rw /system
+	rm -f /cache/*.apk
+	rm -f /cache/*.tmp
+	rm -f /data/dalvik-cache/*.apk
+	rm -f /data/dalvik-cache/*.tmp
+	if [ -e /data/system/userbehavior.db ]
+	then
+		rm -f /data/system/userbehavior.db
+	fi
+	if [ -d /data/system/usagestats ]
+	then
+		chmod 400 /data/system/usagestats
+	fi
+	if [ -d /data/system/appusagestats ]
+	then
+		chmod 400 /data/system/appusagestats
+	fi
+	busybox mount -o remount,ro /system
+fi
+

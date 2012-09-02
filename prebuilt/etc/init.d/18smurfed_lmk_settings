@@ -1,0 +1,131 @@
+#! /system/bin/bash
+
+#   Smurfed Out Tweaks
+#     Created By Papa Smurf151 from XDA
+# Set OOM Settings
+
+. /system/etc/SmurfMod_settings.sh
+
+if [ $oom_settings -eq 0 ]; then
+	busybox mount -o remount,rw /system
+	chmod -R 777 /sys/module/lowmemorykiller/parameters/minfree
+	chmod -R 777 /sys/module/lowmemorykiller/parameters/adj
+	echo "8,12,45,54,61,70" > /sys/module/lowmemorykiller/parameters/adj;
+	echo "2048,3072,11520,13824,15616,17920" > /sys/module/lowmemorykiller/parameters/minfree;
+	chmod -R 444 /sys/module/lowmemorykiller/parameters/minfree
+	chmod -R 444 /sys/module/lowmemorykiller/parameters/adj
+    setprop ro.FOREGROUND_APP_MEM=2048
+    setprop ro.VISIBLE_APP_MEM=3072
+    setprop ro.SECONDARY_SERVER_MEM=11520
+    setprop ro.BACKUP_APP_MEM=13824
+    setprop ro.HOME_APP_MEM=1024
+    setprop ro.HIDDEN_APP_MEM=13824
+    setprop ro.EMPTY_APP_MEM=17920
+    setprop ro.PERCEPTIBLE_APP_MEM=1024
+    setprop ro.HEAVY_WEIGHT_APP_MEM=11520
+    setprop ro.CONTENT_PROVIDER_MEM=13824
+    setprop ro.FOREGROUND_APP_ADJ=8
+    setprop ro.VISIBLE_APP_ADJ=12
+    setprop ro.SECONDARY_SERVER_ADJ=45
+    setprop ro.BACKUP_APP_ADJ=46
+    setprop ro.HOME_APP_ADJ=9
+    setprop ro.HIDDEN_APP_MIN_ADJ=53
+    setprop ro.EMPTY_APP_ADJ=70
+    setprop ro.PERCEPTIBLE_APP_ADJ=10
+    setprop ro.HEAVY_WEIGHT_APP_ADJ=13
+    setprop ro.CONTENT_PROVIDER_ADJ=54
+	busybox mount -o remount,rw /system
+fi
+
+if [ $oom_settings -eq 1 ]; then
+	busybox mount -o remount,rw /system
+	chmod -R 777 /sys/module/lowmemorykiller/parameters/minfree
+	chmod -R 777 /sys/module/lowmemorykiller/parameters/adj
+	echo "8,14,40,50,60,75" > /sys/module/lowmemorykiller/parameters/adj;
+	echo "2048,3584,10240,12800,15360,19200" > /sys/module/lowmemorykiller/parameters/minfree;
+	chmod -R 444 /sys/module/lowmemorykiller/parameters/minfree
+	chmod -R 444 /sys/module/lowmemorykiller/parameters/adj
+    setprop ro.FOREGROUND_APP_MEM=2048
+    setprop ro.VISIBLE_APP_MEM=3584
+    setprop ro.SECONDARY_SERVER_MEM=10240
+    setprop ro.BACKUP_APP_MEM=12800
+    setprop ro.HOME_APP_MEM=1024
+    setprop ro.HIDDEN_APP_MEM=12800
+    setprop ro.EMPTY_APP_MEM=19200
+    setprop ro.PERCEPTIBLE_APP_MEM=1024
+    setprop ro.HEAVY_WEIGHT_APP_MEM=10240
+    setprop ro.CONTENT_PROVIDER_MEM=12800
+    setprop ro.FOREGROUND_APP_ADJ=8
+    setprop ro.VISIBLE_APP_ADJ=14
+    setprop ro.SECONDARY_SERVER_ADJ=40
+    setprop ro.BACKUP_APP_ADJ=41
+    setprop ro.HOME_APP_ADJ=9
+    setprop ro.HIDDEN_APP_MIN_ADJ=49
+    setprop ro.EMPTY_APP_ADJ=75
+    setprop ro.PERCEPTIBLE_APP_ADJ=10
+    setprop ro.HEAVY_WEIGHT_APP_ADJ=15
+    setprop ro.CONTENT_PROVIDER_ADJ=50
+	busybox mount -o remount,rw /system
+fi
+
+if [ $oom_settings -eq 2 ]; then
+	busybox mount -o remount,rw /system
+	chmod -R 777 /sys/module/lowmemorykiller/parameters/minfree
+	chmod -R 777 /sys/module/lowmemorykiller/parameters/adj
+	echo "8,14,75,90,95,125" > /sys/module/lowmemorykiller/parameters/adj;
+	echo "2048,3584,19200,23040,24320,32000" > /sys/module/lowmemorykiller/parameters/minfree;
+	chmod -R 444 /sys/module/lowmemorykiller/parameters/minfree
+	chmod -R 444 /sys/module/lowmemorykiller/parameters/adj
+    setprop ro.FOREGROUND_APP_MEM=2048
+    setprop ro.VISIBLE_APP_MEM=3584
+    setprop ro.SECONDARY_SERVER_MEM=19200
+    setprop ro.BACKUP_APP_MEM=23040
+    setprop ro.HOME_APP_MEM=1024
+    setprop ro.HIDDEN_APP_MEM=23040
+    setprop ro.EMPTY_APP_MEM=32000
+    setprop ro.PERCEPTIBLE_APP_MEM=1024
+    setprop ro.HEAVY_WEIGHT_APP_MEM=19200
+    setprop ro.CONTENT_PROVIDER_MEM=24320
+    setprop ro.FOREGROUND_APP_ADJ=8
+    setprop ro.VISIBLE_APP_ADJ=14
+    setprop ro.SECONDARY_SERVER_ADJ=75
+    setprop ro.BACKUP_APP_ADJ=76
+    setprop ro.HOME_APP_ADJ=9
+    setprop ro.HIDDEN_APP_MIN_ADJ=89
+    setprop ro.EMPTY_APP_ADJ=125
+    setprop ro.PERCEPTIBLE_APP_ADJ=10
+    setprop ro.HEAVY_WEIGHT_APP_ADJ=15
+    setprop ro.CONTENT_PROVIDER_ADJ=90
+	busybox mount -o remount,rw /system
+fi
+
+if [ $oom_settings -eq 3 ]; then
+	busybox mount -o remount,rw /system
+	chmod -R 777 /sys/module/lowmemorykiller/parameters/minfree
+	chmod -R 777 /sys/module/lowmemorykiller/parameters/adj
+	echo "25,35,55,70,150,250" > /sys/module/lowmemorykiller/parameters/adj;
+	echo "6400,8960,14080,17920,38400,64000" > /sys/module/lowmemorykiller/parameters/minfree;
+	chmod -R 444 /sys/module/lowmemorykiller/parameters/minfree
+	chmod -R 444 /sys/module/lowmemorykiller/parameters/adj
+    setprop ro.FOREGROUND_APP_MEM=6400
+    setprop ro.VISIBLE_APP_MEM=8960
+    setprop ro.SECONDARY_SERVER_MEM=14080
+    setprop ro.BACKUP_APP_MEM=17920
+    setprop ro.HOME_APP_MEM=3200
+    setprop ro.HIDDEN_APP_MEM=17920
+    setprop ro.EMPTY_APP_MEM=64000
+    setprop ro.PERCEPTIBLE_APP_MEM=3200
+    setprop ro.HEAVY_WEIGHT_APP_MEM=14080
+    setprop ro.CONTENT_PROVIDER_MEM=38400
+    setprop ro.FOREGROUND_APP_ADJ=25
+    setprop ro.VISIBLE_APP_ADJ=35
+    setprop ro.SECONDARY_SERVER_ADJ=55
+    setprop ro.BACKUP_APP_ADJ=56
+    setprop ro.HOME_APP_ADJ=26
+    setprop ro.HIDDEN_APP_MIN_ADJ=69
+    setprop ro.EMPTY_APP_ADJ=250
+    setprop ro.PERCEPTIBLE_APP_ADJ=27
+    setprop ro.HEAVY_WEIGHT_APP_ADJ=36
+    setprop ro.CONTENT_PROVIDER_ADJ=70
+	busybox mount -o remount,rw /system
+fi	

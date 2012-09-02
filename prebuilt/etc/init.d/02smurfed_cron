@@ -1,0 +1,127 @@
+#! /system/bin/bash
+
+#   Smurfed Out Tweaks
+#     Created By Papa Smurf151 from XDA
+# Cron
+
+. /system/etc/SmurfMod_settings.sh
+
+if [ $cron -eq 1 ]; then
+	busybox mount -o remount,rw /system
+		mount -o remount,rw rootfs /
+		if busybox [ ! -L /bin ]; then
+			ln -s /system/bin/ /bin
+		fi
+		mount -o remount,ro rootfs /
+	
+		# set timezone (if you're not between -0500 and -0800 you get PST)
+		# todo - support other timezones
+		timezone=`date +%z`
+		if busybox [ $timezone = "-0800" ]; then
+			TZ=PST8PDT
+		elif busybox [ $timezone = "-0700" ]; then
+			TZ=MST7MDT
+		elif busybox [ $timezone = "-0600" ]; then
+			TZ=CST6CDT
+		elif busybox [ $timezone = "-0500" ]; then
+			TZ=EST5EDT
+		else
+			TZ=PST8PDT
+		fi
+		export TZ
+	
+		# use /data/cron, call the crontab file "root"
+		if busybox [ ! -d /data/cron ]; then
+			busybox mkdir -p /data/cron
+			cat > /data/cron/root << EOF
+	# run-parts
+	01 * * * * busybox run-parts /system/etc/cron/cron.hourly
+	02 4 * * * busybox run-parts /system/etc/cron/cron.daily
+	22 4 * * 0 busybox run-parts /system/etc/cron/cron.weekly
+	EOF
+		fi
+		busybox crond -c /data/cron
+		if busybox [ ! -d /system/etc/cron ]; then
+			mkdir /system/etc/cron
+			mkdir /system/etc/cron/cron.daily
+			mkdir /system/etc/cron/cron.hourly
+			mkdir /system/etc/cron/cron.weekly
+		cat >> /system/etc/cron/cron.conf <<EOF
+# Drop page, dentry and inode caches
+HOURLY_DROP_CACHES=1
+DAILY_DROP_CACHES=1
+WEEKLY_DROP_CACHES=1
+
+# Clear data cache
+HOURLY_CLEAR_CACHE=1
+DAILY_CLEAR_CACHE=1
+WEEKLY_CLEAR_CACHE=1
+EOF
+cat >> /system/etc/cron/cron.daily/00drop_caches <<EOF
+#!/system/bin/sh
+
+. /system/etc/cron/cron.conf
+
+if test \$DAILY_DROP_CACHES -eq 1; then
+	sync
+	echo 3 > /proc/sys/vm/drop_caches
+fi
+EOF
+cat >> /system/etc/cron/cron.daily/01clear_cache <<EOF
+#!/system/bin/sh
+
+. /system/etc/cron/cron.conf
+
+if test \$DAILY_CLEAR_CACHE -eq 1; then
+	cache -rmdata
+fi
+EOF
+cat >> /system/etc/cron/cron.hourly/00drop_caches <<EOF
+#!/system/bin/sh
+
+. /system/etc/cron/cron.conf
+
+if test \$HOURLY_DROP_CACHES -eq 1; then
+	sync
+	echo 3 > /proc/sys/vm/drop_caches
+fi
+EOF
+cat >> /system/etc/cron/cron.hourly/01clear_cache <<EOF
+#!/system/bin/sh
+
+. /system/etc/cron/cron.conf
+
+if test \$HOURLY_CLEAR_CACHE -eq 1; then
+	cache -rmdata
+fi
+EOF
+cat >> /system/etc/cron/cron.weekly/00drop_caches <<EOF
+#!/system/bin/sh
+
+. /system/etc/cron/cron.conf
+
+if test \$WEEKLY_DROP_CACHES -eq 1; then
+	sync
+	echo 3 > /proc/sys/vm/drop_caches
+fi
+EOF
+cat >> /system/etc/cron/cron.weekly/01clear_cache <<EOF
+#!/system/bin/sh
+
+. /system/etc/cron/cron.conf
+
+if test \$WEEKLY_CLEAR_CACHE -eq 1; then
+	cache -rmdata
+fi
+EOF
+		fi
+	busybox mount -o remount,ro /system
+fi
+
+if [ $cron -eq 2 ]; then
+	busybox mount -o remount,ro /system
+	rm /system/etc/cron
+	rm /data/cron
+	busybox mount -o remount,ro /system
+fi
+

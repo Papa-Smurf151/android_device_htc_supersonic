@@ -1,11 +1,11 @@
-CM9 for the EVO 4G
+SmurfMod9 for the EVO 4G
 
 ## Info
 
 |||
 |-----------------------------------:|:--------------------------|
-|**Discussion thread**: | http://forum.xda-developers.com/showthread.php?t=1625096
-|**Bug List**:		| http://code.google.com/p/cm9-supersonic/
+|**Discussion thread**: | http://forum.xda-developers.com/showthread.php?t=1808358
+|**Bug List**:		| http://forum.xda-developers.com/showthread.php?t=1808358
 
 ## Building 
 
@@ -23,27 +23,21 @@ repo init -u git://github.com/CyanogenMod/android.git -b ics
 
 ### Download the source
 ```bash
-cd ~/cm9
 repo sync -j16
 ```
 NOTE: This WILL take a long time.
 
 ### Finish setting up repo
 ```bash
-wget -O .repo/local_manifest.xml https://raw.github.com/jmztaylor/android_device_htc_supersonic/master/Manifest/local_manifest.xml
+wget -O .repo/local_manifest.xml https://raw.github.com/Papa-Smurf151/android_device_htc_supersonic/master/Manifest/local_manifest.xml
 ```
 
 ### Download my sources
 ```bash
-cd ~/cm9
 repo sync -j16
 ```
 
 ### Build
-Make sure we're in ~/cm9...
-```bash
-cd ~/cm9
-```
 Pull in the prebuilts, like Rom Manager...
 ```bash
 ./vendor/cm/get-prebuilts

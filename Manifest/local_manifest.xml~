@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
   <project name="pvyParts/smurf_settings.git" path="packages/apps/SmurfSettings" revision="master" />
-  <remove-project name="CyanogenMod/android_packages_apps_Settings" />
-  <project name="Kasual/android_packages_apps_Settings.git" path="packages/apps/Settings" revision="ics" />
+  <project name="pvyParts/Battery-Bar-Settings.git" path="packages/apps/BatteryBar" revision="master" />
   <project name="Papa-Smurf151/android_device_htc_supersonic.git" path="device/htc/supersonic" revision="master" />
   <project name="Papa-Smurf151/android_vendor_htc_supersonic.git" path="vendor/htc/supersonic" revision="ics" />
   <remove-project name="CyanogenMod/android_hardware_qcom_display" />
@@ -14,5 +13,5 @@
   <project name="Evervolv/android_vendor_qcom_opensource_omx_mm-core" path="vendor/qcom/opensource/omx/mm-core" revision="ics" />
   <project name="jmztaylor/android_device_htc_qsd8k-common.git" path="device/htc/qsd8k-common" revision="ics"/>
   <remove-project name="CyanogenMod/android_frameworks_base" />
-  <project name="Kasual/android_frameworks_base.git" path="frameworks/base" revision="ics" />
+  <project name="Papa-Smurf151/android_frameworks_base.git" path="frameworks/base" revision="ics" />
 </manifest>

@@ -1,0 +1,13 @@
+#! /system/bin/bash
+
+#   Smurfed Out Tweaks
+#     Created By Papa Smurf151 from XDA
+# Sets Dalvik VM Heapsize
+
+. /system/etc/SmurfMod_settings.sh
+
+busybox mount -o remount,rw /system 
+
+setprop dalvik.vm.heapsize=$vm_heapsize
+
+busybox mount -o remount,ro /system

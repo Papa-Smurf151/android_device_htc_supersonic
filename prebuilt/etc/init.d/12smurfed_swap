@@ -1,0 +1,26 @@
+#! /system/bin/bash
+
+#   Smurfed Out Tweaks
+#     Created By Papa Smurf151 from XDA
+# Creating Swap
+
+. /system/etc/SmurfMod_settings.sh
+
+if [ $create_swap -eq 1 ]; then
+	busybox mount -o remount,ro /system
+	if [ -f /data/smurfed/swap ] ; then
+		echo "Swap already created"
+	else
+	busybox dd if=/dev/zero of=/data/smurfed/swap bs=1k count=200000 > /dev/null
+	mkswap /data/smurfed/swap > /dev/null
+	fi
+	busybox mount -o remount,ro /system
+fi
+
+if [ $create_swap -eq 2 ]; then
+	busybox mount -o remount,ro /system
+	if [ -f /data/smurfed/swap ] ; then
+		rm -f /data/smurfed/swap
+	fi
+	busybox mount -o remount,ro /system
+fi

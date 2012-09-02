@@ -1,0 +1,43 @@
+#! /system/bin/bash
+
+#   Smurfed Out Tweaks
+#     Created By Papa Smurf151 from XDA
+# Enable/Disable Boot Animation
+
+. /system/etc/SmurfMod_settings.sh
+
+if [ $boot_animation -eq 1 ]; then
+	busybox mount -o remount,rw /system
+	setprop debug.sf.nobootanimation=0
+	if [ -f /system/customize/resource/bootanimation.zip.bak  ] ; then
+		cp /system/customize/resource/bootanimation.zip.bak /system/customize/resource/bootanimation.zip;
+		rm /system/customize/resource/bootanimation.zip.bak
+	fi
+	if [ -f /system/customize/resource/spc_bootanimation.zip.bak  ] ; then
+		cp /system/customize/resource/spc_bootanimation.zip.bak /system/customize/resource/spc_bootanimation.zip;
+		rm /system/customize/resource/spc_bootanimation.zip.bak
+	fi
+	if [ -f /system/media/bootanimation.zip.bak  ] ; then
+		cp /system/media/bootanimation.zip.bak /system/media/bootanimation.zip;
+		rm /system/media/bootanimation.zip.bak
+	fi
+	busybox mount -o remount,rw /system
+fi
+
+if [ $boot_animation -eq 0 ]; then
+	busybox mount -o remount,rw /system
+	setprop debug.sf.nobootanimation=1
+	if [ -f /system/media/bootanimation.zip  ] ; then
+		cp /system/media/bootanimation.zip /system/media/bootanimation.zip.bak;
+		rm /system/media/bootanimation.zip
+	fi
+	if [ -f /system/customize/resource/bootanimation.zip  ] ; then
+		cp /system/customize/resource/bootanimation.zip /system/customize/resource/bootanimation.zip.bak;
+		rm /system/customize/resource/bootanimation.zip
+	fi
+	if [ -f /system/customize/resource/spc_bootanimation.zip  ] ; then
+		cp /system/customize/resource/spc_bootanimation.zip /system/customize/resource/spc_bootanimation.zip.bak;
+		rm /system/customize/resource/spc_bootanimation.zip
+	fi
+	busybox mount -o remount,rw /system
+fi

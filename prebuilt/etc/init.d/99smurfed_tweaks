@@ -1,0 +1,58 @@
+#!/system/bin/sh
+#   Smurfed Out Tweaks
+#     Created By Papa Smurf151 from XDA
+
+busybox mount -o remount,rw /
+busybox mount -o remount,rw rootfs
+busybox mount -o remount,rw /system 2>/dev/null
+
+# One-time tweaks to apply on every boot
+
+STL=`ls -d /sys/block/stl*`
+BML=`ls -d /sys/block/bml*`
+MMC=`ls -d /sys/block/mmc*`
+
+for i in $STL $BML $MMC $TFSR; do
+	echo 0 > $i/queue/rotational
+	echo 1 > $i/queue/iosched/low_latency
+	echo 1 > $i/queue/iosched/back_seek_penalty
+	echo 1000000000 > $i/queue/iosched/back_seek_max
+	echo 3 > $i/queue/iosched/slice_idle
+	echo 16 > $i/queue/iosched/quantum
+	echo 1 > $i/queue/iosched/fifo_batch
+done
+
+# Flags blocks as non-rotational and increases cache size
+
+LOOP=`ls -d /sys/block/loop*`;
+RAM=`ls -d /sys/block/ram*`;
+MMC=`ls -d /sys/block/mmc*`;
+for j in $LOOP $RAM
+	do
+		echo "0" > $j/queue/rotational;
+		echo "4096" > $j/queue/read_ahead_kb;
+done 
+
+for a in $LOOP $MMC
+	do
+		echo "512" > $a/queue/nr_requests;
+done
+
+#Move dalvik-cache to cache partition (if it's big enough) to free up data partition space
+
+CACHESIZE=$(df -k /cache | tail -n1 | tr -s ' ' | cut -d ' ' -f2)
+if [ $CACHESIZE -gt 80000 ] ; then
+	if [ ! -d /cache/dalvik-cache ] ; then
+		busybox rm -rf /cache/dalvik-cache /data/dalvik-cache
+		mkdir /cache/dalvik-cache /data/dalvik-cache
+	fi
+	busybox mount -o bind /cache/dalvik-cache /data/dalvik-cache
+	busybox chown 1000:1000 /cache/dalvik-cache
+	busybox chmod 0771 /cache/dalvik-cache
+fi
+
+# Remount all partitions with noatime
+for k in $(busybox mount | grep relatime | cut -d " " -f3) ; do
+	sync
+	busybox mount -o remount,noatime $k
+done

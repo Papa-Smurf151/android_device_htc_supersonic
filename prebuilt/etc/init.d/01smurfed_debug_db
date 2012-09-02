@@ -1,0 +1,43 @@
+#! /system/bin/bash
+
+#   Smurfed Out Tweaks
+#     Created By Papa Smurf151 from XDA
+# Defrags Database Files
+
+. /system/etc/SmurfMod_settings.sh
+
+if [ $defrag_db -eq 1 ]; then
+	busybox mount -o remount,rw /system
+	for i in \
+		`busybox find /data -iname "*.db"`; 
+	do \
+		/system/xbin/sqlite3 $i 'VACUUM;'; 
+		/system/xbin/sqlite3 $i 'REINDEX;'; 
+	done;
+
+	if [ -d "/dbdata" ]; then
+		for i in \
+		`busybox find /dbdata -iname "*.db"`; 
+		do \
+			/system/xbin/sqlite3 $i 'VACUUM;'; 
+			/system/xbin/sqlite3 $i 'REINDEX;'; 
+		done;
+	fi;
+
+	if [ -d "/datadata" ]; then
+		for i in \
+		`busybox find /datadata -iname "*.db"`; 
+		do \
+			/system/xbin/sqlite3 $i 'VACUUM;'; 
+			/system/xbin/sqlite3 $i 'REINDEX;'; 
+		done;
+	fi;
+
+	for i in \
+	`busybox find /sdcard -iname "*.db"`; 
+	do \
+		/system/xbin/sqlite3 $i 'VACUUM;'; 
+		/system/xbin/sqlite3 $i 'REINDEX;'; 
+	done;
+	busybox mount -o remount,ro /system	
+fi

@@ -1,0 +1,21 @@
+#! /system/bin/bash
+
+#   Smurfed Out Tweaks
+#     Created By Papa Smurf151 from XDA
+# EXT4 Tweaks
+
+. /system/etc/SmurfMod_settings.sh
+
+if [ $ext4_tweaks -eq 1 ]; then
+	busybox mount -o remount,rw /system
+	tune2fs -o journal_data_writeback /block/path/to/system
+	tune2fs -O ^has_journal /block/path/to/system
+	tune2fs -o journal_data_writeback /block/path/to/cache
+	tune2fs -O ^has_journal /block/path/to/cache
+	tune2fs -o journal_data_writeback /block/path/to/data
+	tune2fs -O ^has_journal /block/path/to/data
+	busybox mount -o remount,noatime,noauto_da_alloc,nodiratime,barrier =0,nobh /system
+	busybox mount -o remount,noatime,noauto_da_alloc,nosuid,nodev,nodir atime,barrier=0,nobh /data
+	busybox mount -o remount,noatime,noauto_da_alloc,nosuid,nodev,nodir atime,barrier=0,nobh /cache
+	busybox mount -o remount,rw /system
+fi

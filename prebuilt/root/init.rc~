@@ -70,33 +70,13 @@ loglevel 3
     mount tmpfs tmpfs /mnt/obb mode=0755,gid=1000
 
     write /proc/sys/kernel/panic_on_oops 1
-    write /proc/sys/kernel/hung_task_timeout_secs 30
+    write /proc/sys/kernel/hung_task_timeout_secs 0
     write /proc/cpu/alignment 4
-    write /proc/sys/kernel/sched_latency_ns 18000000
-    write /proc/sys/kernel/sched_wakeup_granularity_ns 3000000
+    write /proc/sys/kernel/sched_latency_ns 10000000
+    write /proc/sys/kernel/sched_wakeup_granularity_ns 2000000
     write /proc/sys/kernel/sched_compat_yield 1
     write /proc/sys/kernel/sched_child_runs_first 0
     write /proc/sys/kernel/randomize_va_space 2
-    write /proc/sys/kernel/sched_min_granularity_ns 1500000
-    write /proc/sys/kernel/panic 0
-    write /proc/sys/kernel/msgmni 2048
-    write /proc/sys/kernel/msgmax 64000
-    write /proc/sys/kernel/shmmni 4096
-    write /proc/sys/kernel/shmall 2097152
-    write /proc/sys/kernel/shmmax 268435456
-    write /proc/sys/kernel/sem 500 512000 64 2048
-    write /proc/sys/kernel/sched_features 24189
-    write /proc/sys/kernel/sched_shares_ratelimit 256000
-    write /proc/sys/kernel/random.write_wakeup_threshold 256
-    write /proc/sys/kernel/random.read_wakeup_threshold 128
-    write /proc/sys/kernel/threads-max 525810
-    write /sys/kernel/debug/sched_features NO_GENTLE_FAIR_SLEEPERS
-    write /sys/kernel/debug/sched_features NO_NEW_FAIR_SLEEPERS
-    write /sys/kernel/debug/sched_features NO_NORMALIZED_SLEEPER
-    write /sys/kernel/debug/sched_features NO_LB_BIAS
-    write /sys/kernel/debug/sched_features NO_NEXT_BUDDY
-    write /sys/kernel/debug/sched_features NO_START_DEBIT
-    write /sys/kernel/debug/sched_features ARCH_POWER
 
 # Create cgroup mount points for process groups
     mkdir /dev/cpuctl
@@ -239,38 +219,16 @@ on boot
 # Memory management.  Basic kernel parameters, and allow the high
 # level system server to be able to adjust the kernel OOM driver
 # paramters to match how it is managing things.
+    write /proc/sys/vm/overcommit_memory 1
+    write /proc/sys/vm/min_free_order_shift 4
     chown root system /sys/module/lowmemorykiller/parameters/adj
     chmod 0664 /sys/module/lowmemorykiller/parameters/adj
     chown root system /sys/module/lowmemorykiller/parameters/minfree
     chmod 0664 /sys/module/lowmemorykiller/parameters/minfree
 
-        # Tweak background writeout
-    write /proc/sys/vm/dirty_expire_centisecs 1000
-    write /proc/sys/vm/dirty_background_ratio  80
-    write /proc/sys/vm/drop_caches 1
-    write /proc/sys/vm/drop_caches 3
-    write /proc/sys/vm/oom_kill_allocating_task 1
-    write /proc/sys/vm/panic_on_oom 0
-    write /proc/sys/vm/dirty_ratio 90
-    write /proc/sys/vm/vfs_cache_pressure 10
-    write /proc/sys/vm/overcommit_memory 1
-    write /proc/sys/vm/min_free_order_shift 4
-    write /proc/sys/vm/laptop_mode 0
-    write /proc/sys/vm/block_dump 0
-    write /proc/sys/vm/oom_dump_tasks 1
-    write /proc/sys/vm/swappiness 0
-    write /proc/sys/vm/dirty_writeback_centisecs 2000
-    write /proc/sys/vm/min_free_kbytes 12800
-
-    # Tweak fs folder
-    write /proc/sys/fs/lease-break-time 10
-    write /proc/sys/fs/file-max 65536
-    write /proc/sys/fs/nr_open 1053696
-    write /proc/sys/fs/inotify/max_queued_events 32000
-    write /proc/sys/fs/inotify/max_user_instances 256
-    write /proc/sys/fs/inotify/max_user_watches 10240
-    write /proc/sys/fs/lease-break-time 10
-    write /proc/sys/fs/file-max 165164
+    # Tweak background writeout
+    write /proc/sys/vm/dirty_expire_centisecs 200
+    write /proc/sys/vm/dirty_background_ratio  5
 
     # Permissions for System Server and daemons.
     chown radio system /sys/android_power/state

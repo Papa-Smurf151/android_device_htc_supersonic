@@ -1,0 +1,21 @@
+#! /system/bin/bash
+
+#   Smurfed Out Tweaks
+#     Created By Papa Smurf151 from XDA
+# Set AC, Misc & USB Charge Current
+
+. /system/etc/SmurfMod_settings.sh 
+
+if [ $boost_charger -eq 1 ]; then
+	busybox mount -o remount,rw /system
+	echo "1000 1000 450" > /sys/devices/virtual/misc/charge_current/charge_current
+	echo 1 > /sys/kernel/fast_charge/force_fast_charge
+	busybox mount -o remount,rw /system
+fi
+
+if [ $boost_charger -eq 0 ]; then
+	busybox mount -o remount,rw /system
+	echo "750 650 450" > /sys/devices/virtual/misc/charge_current/charge_current
+	echo 0 > /sys/kernel/fast_charge/force_fast_charge
+	busybox mount -o remount,rw /system
+fi
