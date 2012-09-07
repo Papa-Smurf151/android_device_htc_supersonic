@@ -82,6 +82,8 @@ ro.ril.disable.power.collapse=1
 # Render UI with GPU
 
 debug.sf.hw=1
+debug.composition.type=gpu
+debug.composition.type=cpu
 
 # Decrease dialing out delay
 
