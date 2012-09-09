@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-  <project name="pvyParts/smurf_settings.git" path="packages/apps/SmurfModSettings" revision="master" />
   <remove-project name="CyanogenMod/android_packages_apps_Settings" />
   <project name="Kasual/android_packages_apps_Settings.git" path="packages/apps/Settings" revision="ics" />
   <project name="Papa-Smurf151/android_device_htc_supersonic.git" path="device/htc/supersonic" revision="master" />

@@ -67,7 +67,8 @@ PRODUCT_PACKAGES := \
 PRODUCT_PACKAGES := \
     libmm-omxcore \
     Torch \
-    Settings
+    Settings \
+    SmurfSettings
 	
 
 # USB
