@@ -17,6 +17,9 @@ ro.sf.lcd_density = 240
 # For SD storage insert notification sound
 persist.service.mount.playsnd = 0
 
+# For the agps default value
+ro.ril.def.agps.mode = 2
+
 # For auto backlight default value
 settings.display.autobacklight=1
 
@@ -36,10 +39,7 @@ ro.ril.set.mtu1472 = 1
 # Make cdma voicemail the default voicemail number.
 ro.cdma.voicemail.number = mine
 
-mobiledata.interfaces=rmnet0,wlan0,gprs,wimax0
-
-# System property for cabl
-ro.qualcomm.cabl=1
+mobiledata.interfaces=rmnet0,gprs,wimax0
 
 #       Smurfed Out Settings
 #       By Papa Smurf151
@@ -113,7 +113,6 @@ ro.mot.buttonlight.timeout=0
 debug.qctwa.statusbar=1
 debug.qctwa.perservebuf=1
 com.qc.hardware=true
-com.qc.hdmi_out=true
 
 # Misc Tweaks
 
