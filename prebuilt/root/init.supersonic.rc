@@ -71,8 +71,7 @@ on boot
     chmod 0777 /data/data/shared
 
     # Overwrite framework low memory killer minfree setting
-    write /sys/module/lowmemorykiller/parameters/minfree 2048,3072,11520,13824,15616,17920
-    write /sys/module/lowmemorykiller/parameters/adj 8,12,45,54,61,70
+    write /sys/module/lowmemorykiller/parameters/minfree 3584,4096,6144,7168,7680,8192
 
     # Enable low memory killer to check file pages
     write /sys/module/lowmemorykiller/parameters/minfile 0,0,0,5120,5632,6144
